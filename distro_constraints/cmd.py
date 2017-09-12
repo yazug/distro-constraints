@@ -8,7 +8,8 @@ def main(args):
             module = row.split(':')[0].split('===')[0]
             package = pymod2pkg.module2package(module, args.dist)
             print 'repoquery --qf "' + module + '===%{ver}  #%{name}-%{ver}-%{rel}.%{arch}" --whatprovides ' + package
-            print 'repoquery --qf "' + module + '===%{ver}  #%{name}-%{ver}-%{rel}.%{arch}" --whatprovides ' + module
+            # Fallback if above does not give anything??
+            # print 'repoquery --qf "' + module + '===%{ver}  #%{name}-%{ver}-%{rel}.%{arch}" --whatprovides ' + module
 
 
 if __name__ == '__main__':
