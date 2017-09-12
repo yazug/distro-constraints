@@ -1,0 +1,2 @@
+repoquery [platform:redhat]
+dnf [platform:fedora]
