@@ -6,16 +6,17 @@ import subprocess
 def main(args):
     with open(args.input_constraints, 'r') as input_file:
         for row in input_file:
+            module = row.split(':')[0].split('===')[0]
+            # split and guard on foo==1.2.3;python_version='2.7'
             python_version = None
             if ';python_version' in row:
                 python_version = row.strip().split(';')[1]
                 if args.python_version not in python_version:
-                    print row.strip()
+                    print module + ';' + python_version
                     continue
-            module = row.split(':')[0].split('===')[0]
             package = pymod2pkg.module2package(module, args.dist)
             cmd = None
-            if args.dist == 'CentOS':
+            if args.dist in ('CentOS', 'RDO', 'RHEL'):
                 # centos
                 cmd = [
                     'repoquery', '--quiet', '--whatprovides', package,
@@ -54,7 +55,10 @@ def main(args):
                         max_ver = max_ver + ';' + python_version
                     print "{0}==={1} # {2}".format(module, max_ver, max_nvr)
                 else:
-                    print row.strip()
+                    if python_version is not None:
+                        print module + ';' + python_version
+                    else:
+                        print module
 
 
 if __name__ == '__main__':
