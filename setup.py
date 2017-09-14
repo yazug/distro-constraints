@@ -13,7 +13,7 @@ setuptools.setup(
 
     packages=setuptools.find_packages(),
 
-    install_requires=['pymod2pkg', ],
+    install_requires=['pymod2pkg', 'pip>=7.1'],
 
     classifiers=[
         'Development Status :: 2 - Pre-Alpha',
